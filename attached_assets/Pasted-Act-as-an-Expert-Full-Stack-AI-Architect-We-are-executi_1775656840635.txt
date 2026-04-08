@@ -1,0 +1,27 @@
+Act as an Expert Full-Stack AI Architect. We are executing a major architectural pivot for our "Anonymity Engine" project (Streamlit frontend, FastAPI backend).
+
+Context:
+Our 5-agent pipeline previously restricted the generative module ("The Alchemist") to tabular data via CTGAN. We are now upgrading this to a fully multimodal synthesis pipeline. The system must now successfully ingest, process, and generate synthetic audio and synthetic images, in addition to tabular data. 
+
+Critically, this entire pipeline must strictly adhere to GDPR rules, specifically regarding biometric data anonymization and data minimization.
+
+Your Task:
+Please refactor our architecture to support these new requirements. I need you to outline the updated logic and provide the code for the following three areas:
+
+1. Multimodal Agent Routing (FastAPI Backend):
+   Update the backend routing logic to act as a traffic controller based on file extensions:
+   - Tabular (.csv, .xlsx): Route to the existing CTGAN logic.
+   - Images (.jpg, .png): Route to a new Image Synthesis pipeline (create a placeholder function for an image-to-image or diffusion model that alters identifiable facial features/backgrounds).
+   - Audio (.mp3, .wav): Route to a new Audio Synthesis pipeline (create a placeholder function for an audio-to-audio model that alters voice prints/pitch to remove original biometric markers).
+
+2. GDPR Compliance Guardrails (Middleware/Prompts):
+   Implement a strict GDPR layer before generation occurs:
+   - Data Minimization: Write a Python utility function to strip all EXIF data, hidden metadata, and location tags from uploaded media before it reaches the AI models.
+   - System Prompting: Write a strict system prompt for the overarching Agent pipeline enforcing that the output must irreversibly destroy the original user's biometric footprint (voice print or facial likeness) to comply with the GDPR Right to Privacy.
+   - The final JSON response must include a `"GDPR_Compliance_Check": "Passed"` flag.
+
+3. Frontend Update (Streamlit):
+   - Update the file uploader to actively encourage audio and image uploads.
+   - Add UI components to display the synthesized, anonymized image output and an audio player (`st.audio`) to play back the synthesized voice.
+
+Please provide the updated Python code for the FastAPI route, the GDPR metadata-stripping utility, the Streamlit frontend, and the Agent's system instructions. Ensure the code is production-ready and well-commented.
